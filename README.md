@@ -1,7 +1,7 @@
 __**TCSP tree converter**__
 ======
 
-This is a tree converter simualtor that combines two json trees, merges them in appropriate result 
+This is simulator that combines two json trees, merges them in appropriate result 
 and retrieve the result in a json format.
   
 These are the steps for testing this simulator: 
