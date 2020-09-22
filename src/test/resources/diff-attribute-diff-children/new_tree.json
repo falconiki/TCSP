@@ -1,0 +1,43 @@
+{
+  "id": "rootId",
+  "type": "ROOT",
+  "attributes": [
+    {
+      "name": "ServiceId",
+      "value": "updatedServiceId"
+    },
+    {
+      "name": "Version",
+      "value": "1004 updated"
+    }
+  ],
+  "children": [
+    {
+      "id": "id-3",
+      "type": "ONLY_IN_NEW",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "serviceId-3"
+        }
+      ],
+      "relations": [
+        "id-2"
+      ]
+    },
+    {
+      "id": "id-2",
+      "type": "IN_BOTH_TREES",
+      "attributes": [
+        {
+          "name": "OnlyInNew",
+          "value": "toBeCreated"
+        },
+        {
+          "name": "ValueChange",
+          "value": "newValue"
+        }
+      ]
+    }
+  ]
+}

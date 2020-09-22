@@ -1,0 +1,121 @@
+{
+  "identifier": "accountRootServiceId",
+  "operation": "NO_ACTION",
+  "attributes": [
+    {
+      "name": "AllegroRootProductId",
+      "value": "agro-1",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "NetId",
+      "value": "n0",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "AgreementId",
+      "value": "agreementId",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "Version",
+      "value": "1003",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "FirewallType",
+      "value": "keni",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "CompanyIndex",
+      "value": "companyIndex",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "VsrVersion",
+      "value": "2.0",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "Stack",
+      "value": "EWANV",
+      "operation": "NO_ACTION"
+    },
+    {
+      "name": "ServiceId",
+      "value": "accountRootServiceId",
+      "operation": "NO_ACTION"
+    }
+  ],
+  "children": [
+    {
+      "identifier": "15",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "15"
+        },
+        {
+          "name": "SiteType",
+          "value": "S"
+        }
+      ]
+    },
+    {
+      "identifier": "6",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "6"
+        },
+        {
+          "name": "CertName",
+          "value": "CA_6"
+        },
+        {
+          "name": "CertSerialNumber",
+          "value": "certSerialNumber-test"
+        }
+      ]
+    },
+    {
+      "identifier": "7",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "7"
+        },
+        {
+          "name": "RangeId",
+          "value": "7"
+        },
+        {
+          "name": "Ip",
+          "value": "192.168.0.0"
+        },
+        {
+          "name": "Cidr",
+          "value": "16"
+        },
+        {
+          "name": "Usage",
+          "value": "global"
+        }
+      ]
+    },
+    {
+      "identifier": "10",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "10"
+        }
+      ]
+    }
+  ]
+}
