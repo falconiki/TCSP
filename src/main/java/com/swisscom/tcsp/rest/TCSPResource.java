@@ -19,7 +19,7 @@ import java.io.IOException;
 public class TCSPResource {
 
     /**
-     * Endpoint that compares two trees and return a merged result entity
+     * Endpoint that compares two trees and returns a merged result entity
      *
      * @param folder
      * @return
