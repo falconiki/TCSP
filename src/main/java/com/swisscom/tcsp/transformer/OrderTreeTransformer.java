@@ -56,7 +56,6 @@ public class OrderTreeTransformer {
         } else {
             log.info("Unable to merge trees with different id elements: initial_tree: [{}] and new_tree: [{}]", orderRequestSourceDto.getId(), orderRequestTargetDto.getId());
         }
-
         return orderResponseBuilder.build();
     }
 
