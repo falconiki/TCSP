@@ -2,7 +2,6 @@ package com.swisscom.tcsp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swisscom.tcsp.dto.Operation;
-import com.swisscom.tcsp.dto.Type;
 import com.swisscom.tcsp.dto.ChildDto;
 import com.swisscom.tcsp.dto.OrderResponseDto;
 import com.swisscom.tcsp.transformer.OrderTreeTransformer;
@@ -44,6 +43,24 @@ public class TcspApplicationTests extends WebLayerTest {
         Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
         //assert
         assertDifferentChildren(actualChildren);
+        assertEquals(expectedChildren.size(), actualChildren.size());
+        assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).collect(Collectors.toList()).size(), actualChildren.stream().map(ChildDto::getAttributes).collect(Collectors.toList()).size());
+        assertEquals(expectedOrderDto.getAttributes().size(), actualOrderDto.getAttributes().size());
+        assertTrue(expectedOrderDto.getAttributes().containsAll(actualOrderDto.getAttributes()));
+    }
+
+    @Test
+    public void testOrderNoCommonChildren() throws Exception {
+        //arrange
+        String folder = "no-common-children";
+        OrderResponseDto expectedOrderDto = parseExpectedResultOrder(folder);
+        //act
+        ResultActions order = createOrder(folder);
+        String actualResult = order.andReturn().getResponse().getContentAsString();
+        OrderResponseDto actualOrderDto = objectMapper.readValue(actualResult, OrderResponseDto.class);
+        Collection<ChildDto> expectedChildren = expectedOrderDto.getChildren();
+        Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
+        //assert
         assertEquals(expectedChildren.size(), actualChildren.size());
         assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).collect(Collectors.toList()).size(), actualChildren.stream().map(ChildDto::getAttributes).collect(Collectors.toList()).size());
         assertEquals(expectedOrderDto.getAttributes().size(), actualOrderDto.getAttributes().size());
@@ -145,6 +162,66 @@ public class TcspApplicationTests extends WebLayerTest {
         Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
         //assert
         assertEquals(expectedChildren.size(), actualChildren.size());
+        assertEquals(expectedOrderDto.getAttributes().size(), actualOrderDto.getAttributes().size());
+        assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).count(), actualChildren.stream().map(ChildDto::getAttributes).count());
+        assertTrue(expectedOrderDto.getAttributes().containsAll(actualOrderDto.getAttributes()));
+    }
+
+    @Test
+    public void testNoChildren() throws Exception {
+        //arrange
+        String folder = "no-children";
+        OrderResponseDto expectedOrderDto = parseExpectedResultOrder(folder);
+        ResultActions order = createOrder(folder);
+        String actualResult = order.andReturn().getResponse().getContentAsString();
+        OrderResponseDto actualOrderDto = objectMapper.readValue(actualResult, OrderResponseDto.class);
+        //act
+        Collection<ChildDto> expectedChildren = expectedOrderDto.getChildren();
+        Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
+        //assert
+        assertEquals(expectedOrderDto.getBrickId(), actualOrderDto.getBrickId());
+        assertEquals(expectedChildren.size(), actualChildren.size());
+        assertEquals(expectedOrderDto.getAttributes().size(), actualOrderDto.getAttributes().size());
+        assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).count(), actualChildren.stream().map(ChildDto::getAttributes).count());
+        assertTrue(expectedOrderDto.getAttributes().containsAll(actualOrderDto.getAttributes()));
+    }
+
+
+    @Test
+    public void testNoAttributes() throws Exception {
+        //arrange
+        String folder = "no-attributes";
+        OrderResponseDto expectedOrderDto = parseExpectedResultOrder(folder);
+        ResultActions order = createOrder(folder);
+        String actualResult = order.andReturn().getResponse().getContentAsString();
+        OrderResponseDto actualOrderDto = objectMapper.readValue(actualResult, OrderResponseDto.class);
+        //act
+        Collection<ChildDto> expectedChildren = expectedOrderDto.getChildren();
+        Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
+        //assert
+        assertEquals(expectedOrderDto.getBrickId(), actualOrderDto.getBrickId());
+        assertEquals(expectedChildren.size(), actualChildren.size());
+        assertEquals(expectedOrderDto.getAttributes().size(), actualOrderDto.getAttributes().size());
+        assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).count(), actualChildren.stream().map(ChildDto::getAttributes).count());
+        assertTrue(expectedOrderDto.getAttributes().containsAll(actualOrderDto.getAttributes()));
+    }
+
+
+    @Test
+    public void testSameIdDifferentType() throws Exception {
+        //arrange
+        String folder = "same-id-diff-type";
+        OrderResponseDto expectedOrderDto = parseExpectedResultOrder(folder);
+        ResultActions order = createOrder(folder);
+        String actualResult = order.andReturn().getResponse().getContentAsString();
+        OrderResponseDto actualOrderDto = objectMapper.readValue(actualResult, OrderResponseDto.class);
+        //act
+        Collection<ChildDto> expectedChildren = expectedOrderDto.getChildren();
+        Collection<ChildDto> actualChildren = actualOrderDto.getChildren();
+        //assert
+        assertEquals(expectedOrderDto.getBrickId(), actualOrderDto.getBrickId());
+        assertEquals(expectedOrderDto.getOperation(), actualOrderDto.getOperation());
+        assertEquals(expectedChildren.size(), actualChildren.size());
         assertEquals(expectedChildren.stream().map(ChildDto::getAttributes).count(), actualChildren.stream().map(ChildDto::getAttributes).count());
         assertTrue(expectedOrderDto.getAttributes().containsAll(actualOrderDto.getAttributes()));
     }
@@ -163,7 +240,7 @@ public class TcspApplicationTests extends WebLayerTest {
         assertEquals(2, noActionChildren.size());
         assertEquals(1, noActionChildren.stream().filter(m -> m.getId().equals(ID_1)).count());
         assertEquals(1, noActionChildren.stream().filter(m -> m.getId().equals(ID_2)).count());
-        assertEquals(2, noActionChildren.stream().filter(m -> m.getType().equals(Type.IN_BOTH_TREES)).count());
+        assertEquals(2, noActionChildren.stream().filter(m -> m.getType().equals("IN_BOTH_TREES")).count());
         assertNotNull(noActionChildren.stream().filter(m -> m.getId().equals(ID_1)).findFirst().get().getRelations());
     }
 
@@ -176,9 +253,9 @@ public class TcspApplicationTests extends WebLayerTest {
         assertEquals(ID_2, childUpdated.getId());
         assertEquals(ID_3, childCreated.getId());
 
-        assertEquals(Type.ONLY_IN_INITIAL, childDeleted.getType());
-        assertEquals(Type.IN_BOTH_TREES, childUpdated.getType());
-        assertEquals(Type.ONLY_IN_NEW, childCreated.getType());
+        assertEquals("ONLY_IN_INITIAL", childDeleted.getType());
+        assertEquals("IN_BOTH_TREES", childUpdated.getType());
+        assertEquals("ONLY_IN_NEW", childCreated.getType());
         assertNotNull(childCreated.getRelations());
         assertNotNull(childDeleted.getRelations());
         assertNull(childUpdated.getRelations());

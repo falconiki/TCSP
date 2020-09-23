@@ -17,7 +17,7 @@ import java.util.Collection;
 public class ChildDto implements Serializable {
 
     private String id;
-    private Type type;
+    private String type;
     private Collection<AttributeDto> attributes;
     private Collection<String> relations;
     private Operation operation;
@@ -32,11 +32,11 @@ public class ChildDto implements Serializable {
     }
 
     @JsonGetter(value = "brickId")
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 

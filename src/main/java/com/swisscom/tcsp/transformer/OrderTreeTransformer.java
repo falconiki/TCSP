@@ -45,19 +45,15 @@ public class OrderTreeTransformer {
 
         OrderResponseDto.OrderResponseDtoBuilder orderResponseBuilder = OrderResponseDto.builder();
         if (crosscheckRoot.areEqual()) {
-            log.info("The tress with id: [{}] have same root elements and are eligible for merging", orderRequestSourceDto.getId());
+            log.info("The trees with id: [{}] have same root elements and are eligible for merging", orderRequestSourceDto.getId());
             OrderRequestDto orderRequestDto = crosscheckRoot.entriesInCommon().values().stream().findFirst().get();
             orderResponseBuilder.identifier(orderRequestDto.getId()).brickId(orderRequestDto.getType()).operation(Operation.NO_ACTION);
-            List<AttributeDto> attributeDtoList = AttributesTransformer.compareAndMergeAttributes(crosscheckAttributes);
-            orderResponseBuilder.attributes(attributeDtoList);
-            if (crosscheckChildren.areEqual()) {
-                crosscheckChildren.entriesInCommon().values().stream().forEach(a -> a.setOperation(Operation.NO_ACTION));
-                orderResponseBuilder.children(crosscheckChildren.entriesInCommon().values());
-            } else {
-                orderResponseBuilder.children(ChildTransfromer.mergeChildren(crosscheckChildren));
-            }
-        } else {
-            log.info("Unable to merge trees with different root elements: initial_tree: [{}] and new_tree: [{}]", orderRequestSourceDto.getId(), orderRequestTargetDto.getId());
+            mergeChildrenAndAttributes(crosscheckAttributes, crosscheckChildren, orderResponseBuilder);
+        } else if (idsAreSame(crosscheckRoot)) {
+            OrderRequestDto orderRequestDto = crosscheckRoot.entriesDiffering().values().stream().findFirst().get().rightValue();
+            orderResponseBuilder.identifier(orderRequestDto.getId()).brickId(orderRequestDto.getType()).operation(Operation.UPDATE);
+            mergeChildrenAndAttributes(crosscheckAttributes, crosscheckChildren, orderResponseBuilder);
+            log.info("Unable to merge trees with different id elements: initial_tree: [{}] and new_tree: [{}]", orderRequestSourceDto.getId(), orderRequestTargetDto.getId());
         }
         return orderResponseBuilder.build();
     }
@@ -78,7 +74,7 @@ public class OrderTreeTransformer {
     }
 
     /**
-     * Method that deserialize json file into a DTO
+     * Method that deserialize json file into a {@link OrderResponseDto}
      *
      * @param newTreePath
      * @return
@@ -91,5 +87,21 @@ public class OrderTreeTransformer {
         reader.close();
         return tcspResponseDto;
     }
+
+    private static boolean idsAreSame(MapDifference<String, OrderRequestDto> crosscheckRoot) {
+        return crosscheckRoot.entriesDiffering().values().stream().findFirst().get().leftValue().getId().equals(crosscheckRoot.entriesDiffering().values().stream().findFirst().get().rightValue().getId());
+    }
+
+    private static void mergeChildrenAndAttributes(MapDifference<String, AttributeDto> crosscheckAttributes, MapDifference<String, ChildDto> crosscheckChildren, OrderResponseDto.OrderResponseDtoBuilder orderResponseBuilder) {
+        List<AttributeDto> attributeDtoList = AttributesTransformer.compareAndMergeAttributes(crosscheckAttributes);
+        orderResponseBuilder.attributes(attributeDtoList);
+        if (crosscheckChildren.areEqual()) {
+            crosscheckChildren.entriesInCommon().values().stream().forEach(a -> a.setOperation(Operation.NO_ACTION));
+            orderResponseBuilder.children(crosscheckChildren.entriesInCommon().values());
+        } else {
+            orderResponseBuilder.children(ChildTransfromer.mergeChildren(crosscheckChildren));
+        }
+    }
+
 
 }

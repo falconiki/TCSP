@@ -1,0 +1,16 @@
+{
+  "id": "rootId",
+  "type": "ROOT",
+  "attributes": [
+    {
+      "name": "ServiceId",
+      "value": "rootServiceId"
+    },
+    {
+      "name": "Version",
+      "value": "1003"
+    }
+  ],
+  "children": [
+  ]
+}

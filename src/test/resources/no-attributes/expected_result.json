@@ -1,0 +1,38 @@
+{
+  "identifier": "rootId",
+  "brickId": "ROOT",
+  "operation": "NO_ACTION",
+  "attributes": [
+  ],
+  "children": [
+    {
+      "identifier": "id-2",
+      "brickId": "IN_BOTH_TREES",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "OnlyInInitial",
+          "value": "toBeDeleted"
+        },
+        {
+          "name": "ValueChange",
+          "value": "oldValue"
+        }
+      ]
+    },
+    {
+      "identifier": "id-1",
+      "brickId": "IN_BOTH_TREES",
+      "operation": "NO_ACTION",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "serviceId-1"
+        }
+      ],
+      "relations": [
+        "id-2"
+      ]
+    }
+  ]
+}

@@ -18,7 +18,7 @@ import java.util.Collection;
 @JsonPropertyOrder({ "identifier", "brickId", "operation", "attributes", "children" })
 public class OrderResponseDto implements Serializable {
     private String identifier;
-    private Type brickId;
+    private String brickId;
     private Operation operation;
     private Collection<AttributeDto> attributes;
     private Collection<ChildDto> children;

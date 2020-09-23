@@ -1,0 +1,71 @@
+{
+  "identifier": "rootId",
+  "brickId": "updated type",
+  "operation": "UPDATE",
+  "attributes": [
+    {
+      "name": "Version",
+      "value": "1004 updated",
+      "operation": "UPDATE"
+    },
+    {
+      "name": "ServiceId",
+      "value": "updatedServiceId",
+      "operation": "UPDATE"
+    }
+  ],
+  "children": [
+    {
+      "identifier": "id-3",
+      "brickId": "ONLY_IN_NEW",
+      "operation": "CREATE",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "serviceId-3",
+          "operation": "CREATE"
+        }
+      ],
+      "relations": [
+        "id-2"
+      ]
+    },
+    {
+      "identifier": "id-1",
+      "brickId": "ONLY_IN_INITIAL",
+      "operation": "DELETE",
+      "attributes": [
+        {
+          "name": "ServiceId",
+          "value": "serviceId-1",
+          "operation": "DELETE"
+        }
+      ],
+      "relations": [
+        "id-2"
+      ]
+    },
+    {
+      "identifier": "id-2",
+      "brickId": "IN_BOTH_TREES",
+      "operation": "UPDATE",
+      "attributes": [
+        {
+          "name": "OnlyInInitial",
+          "value": "toBeDeleted",
+          "operation": "DELETE"
+        },
+        {
+          "name": "OnlyInNew",
+          "value": "toBeCreated",
+          "operation": "CREATE"
+        },
+        {
+          "name": "ValueChange",
+          "value": "newValue",
+          "operation": "UPDATE"
+        }
+      ]
+    }
+  ]
+}

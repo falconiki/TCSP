@@ -1,7 +1,6 @@
 package com.swisscom.tcsp.dto;
 
 import lombok.*;
-
 import java.util.List;
 
 @Data
@@ -12,7 +11,7 @@ import java.util.List;
 public class OrderRequestDto {
 
     private String id;
-    private Type type;
+    private String type;
     private List<AttributeDto> attributes;
     private List<ChildDto> children;
 }
