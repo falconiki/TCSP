@@ -20,5 +20,8 @@ You can choose different option from the folders under main/resources/ instead o
 - same-trees-updated-children
 - same-trees
 - large-trees
+- no-common-children
+- no-attributes
+- same-id-diff-type
 
 Additionally, these options are covered with integration tests in **TcspApplicationTests**
