@@ -41,7 +41,7 @@ public class AttributesTransformer {
         return attributeDtoList;
     }
 
-    public static void setOperationToAttributes(Map<String, AttributeDto> stringAttributeDtoMap, Operation noAction) {
+    private static void setOperationToAttributes(Map<String, AttributeDto> stringAttributeDtoMap, Operation noAction) {
         stringAttributeDtoMap.values().stream().forEach(m -> m.setOperation(noAction));
     }
 

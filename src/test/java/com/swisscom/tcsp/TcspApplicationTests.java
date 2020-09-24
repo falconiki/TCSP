@@ -25,9 +25,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class TcspApplicationTests extends WebLayerTest {
 
-    public static final String ID_1 = "id-1";
-    public static final String ID_2 = "id-2";
-    public static final String ID_3 = "id-3";
+    private static final String ID_1 = "id-1";
+    private static final String ID_2 = "id-2";
+    private static final String ID_3 = "id-3";
+    private static final String ONLY_IN_INITIAL = "ONLY_IN_INITIAL";
+    private static final String IN_BOTH_TREES = "IN_BOTH_TREES";
+    private static final String ONLY_IN_NEW = "ONLY_IN_NEW";
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
@@ -253,9 +256,9 @@ public class TcspApplicationTests extends WebLayerTest {
         assertEquals(ID_2, childUpdated.getId());
         assertEquals(ID_3, childCreated.getId());
 
-        assertEquals("ONLY_IN_INITIAL", childDeleted.getType());
-        assertEquals("IN_BOTH_TREES", childUpdated.getType());
-        assertEquals("ONLY_IN_NEW", childCreated.getType());
+        assertEquals(ONLY_IN_INITIAL, childDeleted.getType());
+        assertEquals(IN_BOTH_TREES, childUpdated.getType());
+        assertEquals(ONLY_IN_NEW, childCreated.getType());
         assertNotNull(childCreated.getRelations());
         assertNotNull(childDeleted.getRelations());
         assertNull(childUpdated.getRelations());
